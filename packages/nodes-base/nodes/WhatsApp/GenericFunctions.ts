@@ -16,7 +16,9 @@ import type {
 } from './types';
 import type { SendAndWaitConfig } from '../../utils/sendAndWait/utils';
 import { createUtmCampaignLink } from '../../utils/utilities';
-export const WHATSAPP_BASE_URL = 'https://graph.facebook.com/v13.0/';
+export const WHATSAPP_BASE_URL = process.env.WHATSAPP_BASE_URL
+	? `${process.env.WHATSAPP_BASE_URL}/v13.0`
+	: 'https://graph.facebook.com/v13.0';
 
 async function appAccessTokenRead(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions,
@@ -33,7 +35,7 @@ async function appAccessTokenRead(
 			client_secret: credentials.clientSecret,
 			grant_type: 'client_credentials',
 		},
-		url: 'https://graph.facebook.com/v19.0/oauth/access_token',
+		url: `${process.env.WHATSAPP_BASE_URL ?? 'https://graph.facebook.com'}/v19.0/oauth/access_token`,
 		json: true,
 	};
 	try {
@@ -61,7 +63,7 @@ async function whatsappApiRequest(
 		method,
 		qs,
 		body: body?.payload,
-		url: `https://graph.facebook.com/v19.0${resource}`,
+		url: `${process.env.WHATSAPP_BASE_URL ?? 'https://graph.facebook.com'}/v19.0${resource}`,
 		json: true,
 	};
 

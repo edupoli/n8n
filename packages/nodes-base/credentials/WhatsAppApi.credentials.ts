@@ -41,7 +41,9 @@ export class WhatsAppApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://graph.facebook.com/v13.0',
+			baseURL: process.env.WHATSAPP_BASE_URL
+		? `${process.env.WHATSAPP_BASE_URL}/v13.0`
+		: 'https://graph.facebook.com/v13.0',
 			url: '/',
 			ignoreHttpStatusErrors: true,
 		},

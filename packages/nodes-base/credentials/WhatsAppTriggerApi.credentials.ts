@@ -30,7 +30,9 @@ export class WhatsAppTriggerApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			method: 'POST',
-			baseURL: 'https://graph.facebook.com/v19.0/oauth/access_token',
+			baseURL: process.env.WHATSAPP_BASE_URL
+			? `${process.env.WHATSAPP_BASE_URL}/v19.0/oauth/access_token`
+			: 'https://graph.facebook.com/v19.0/oauth/access_token',
 			body: {
 				client_id: '={{$credentials.clientId}}',
 				client_secret: '={{$credentials.clientSecret}}',
